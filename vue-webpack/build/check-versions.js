@@ -1,6 +1,6 @@
 'use strict'
-const chalk = require('chalk')
-const semver = require('semver')
+const chalk = require('chalk') //设置输出文本颜色
+const semver = require('semver') //版本号教研
 const packageConfig = require('../package.json')
 const shell = require('shelljs')
 

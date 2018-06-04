@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-resource</title>
+  <script type="text/javascript" src="/node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="/node_modules/vue-resource/dist/vue-resource.js"></script>
+  <style>
+    button{
+      margin: 2px 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+
+    <h1>vue-resource demo</h1>
+    <button @click="get">get request</button>
+    <button @click="post">post request</button>
+    <button @click="jsonp">jsonp request</button>
+    <br>
+    <br>
+    {{msg}}
+  </div>
+  <script>
+    new Vue({
+
+    });
+  </script>
+</body>
+</html>

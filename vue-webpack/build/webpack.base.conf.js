@@ -12,6 +12,8 @@ function resolve (dir) {
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
+
+  // 项目入口
   entry: {
     app: './src/main.js'
   },
@@ -23,7 +25,9 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
+    // 可以省略的扩展名
     extensions: ['.js', '.vue', '.json'],
+    // 路径别名
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
@@ -45,7 +49,10 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 10, //单位：byte， 小于该值时， 使用base64字符串显示图片
+          // img/[name]： 以原有名字放在静态资源目录下，
+          // [hash:7]: 名字冲拼接7位hash值 
+          // [ext]： 拓展名
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },

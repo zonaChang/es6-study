@@ -6,8 +6,7 @@
 
     <!-- 传递参数给子组件 -->
     <!-- <Parent2ChildData num="10"></Parent2ChildData> -->
-    <!-- <Parent2ChildData v-bind:num="num"></Parent2ChildData>
-     -->
+    <!-- <Parent2ChildData v-bind:num="num"></Parent2ChildData> -->
      <!-- v-on:incre 自定义事件 -->
     <each2Data v-bind:num="num" v-on:incre="increment" v-on:decre="decrement"></each2Data>
     <p>parent: {{num}}</p>
