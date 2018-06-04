@@ -17,7 +17,7 @@ Vue.use(Router)
 export default new Router({
 
   // hash, history
-  mode:"history", //指定路由的格式， 默认为hash格式（路径中带有#）； 指定为history则表示使用传统的url格式
+  // mode:"history", //指定路由的格式， 默认为hash格式（路径中带有#）； 指定为history则表示使用传统的url格式
   routes: [
     {
       path: '/',
