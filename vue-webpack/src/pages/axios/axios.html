@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>axios-study</title>
+  <script type="text/javascript" src="/vue-webpack/node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="/vue-webpack/node_modules/axios/dist/axios.js"></script>
+
+  <style>
+    button{
+      margin: 2px 5px;
+    }
+  </style>
+</head>
+<body>
+<div id="app" class="resource">
+  <h1>axios demo</h1>
+  <h3>直接用webstorm页面的浏览器启动即可访问该页面</h3>
+  <h3>axios 直接挂在与window对象，可以直接使用</h3>
+  <button @click="get">get request</button>
+  <button @click="post">post request</button>
+  <button @click="http">http配置的方式发起请求 request</button>
+  <br>
+  <br>
+  {{msg}}
+</div>
+<script>
+  new Vue({
+    el:"#app",
+    data:{
+      msg:"xxxx"
+    },
+
+    //生命周期钩子， 进入页面时会调用该方法.
+    mounted: function(){
+
+      console.log("invoke mounted");
+
+    },
+    methods:{
+      get(){
+        axios.get("../../../package1.json", {params:{name:"carl", age:"25"}, headers:{token:"token-axios"}}).then(res=>{
+
+          console.log("invoke get method success");
+        }).catch(err=>{
+          console.log("invoke get method fail");
+        })
+      },
+      post(){
+
+        axios.post("../../../package.json",{name:"carl-post", age:"23-post"},{headers:{token:"token-post"}}).then(res=>{
+          console.log("invoke post method success");
+
+        }).catch(err=>{
+          console.log("invoke post method fail");
+
+        })
+
+      },
+      http(){
+
+        axios({
+          url:"../../../package.json",
+          method:"post",
+          // 请求的参数需要写在params中,
+          params:{
+            name:"carl-get",
+            age:"23-get"
+
+          },
+          // Post请求的请求体中包含的参数, get请求该参数无效
+          data:{
+            name:"carl-post",
+            age:"23-post"
+
+          },
+          headers:{
+            token:"token-header"
+          },
+          before(){
+            console.log("method ivoke before");
+
+          }
+        }).then(res=>{
+          console.log("method invoke success");
+        }).catch(err=>{
+          console.log("method invoke fail");
+
+        });
+
+      }
+    }
+  });
+</script>
+</body>
+</html>

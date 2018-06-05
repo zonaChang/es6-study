@@ -12,7 +12,6 @@
 </template>
 
 <script>
-    import
     export default {
       data:{
         msg:""

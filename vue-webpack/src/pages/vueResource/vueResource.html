@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>vue-resource</title>
-  <script type="text/javascript" src="/node_modules/vue/dist/vue.js"></script>
-  <script type="text/javascript" src="/node_modules/vue-resource/dist/vue-resource.js"></script>
+  <script type="text/javascript" src="/vue-webpack/node_modules/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="/vue-webpack/node_modules/vue-resource/dist/vue-resource.js"></script>
+
   <style>
     button{
       margin: 2px 5px;
@@ -12,19 +13,110 @@
   </style>
 </head>
 <body>
-  <div id="app">
-
+  <div id="app" class="resource">
+    <h1>直接用webstorm页面的浏览器启动即可访问该页面</h1>
     <h1>vue-resource demo</h1>
     <button @click="get">get request</button>
     <button @click="post">post request</button>
     <button @click="jsonp">jsonp request</button>
+    <button @click="http">http配置的方式发起请求 request</button>
     <br>
     <br>
     {{msg}}
   </div>
   <script>
     new Vue({
+      el:"#app",
+      data:{
+        msg:"xxxx"
+      },
+      // 设置全局的请求路径公共部分， 具体方法的请求，只需要写后半部分
+      http:{
+        root:"http://localhost:63342/vue-webpack/"
+      },
+      //生命周期钩子， 进入页面时会调用该方法.
+      mounted: function(){
 
+        console.log("invoke mounted");
+        // 全局拦截器， 可用来loading和closeLoading 发起请求时调用的方法
+        Vue.http.interceptors.push((request, next)=>{
+          console.log('invoke mounted init ....');
+          // next是一个异步操作
+          next(response=>{
+            console.log("invoke mounted response....");
+            return response;
+          });
+          console.log("invoke mounted after....");
+
+        });
+
+      },
+      methods:{
+        get(){
+          console.log("invoke get");
+          //vue-resource 已经挂在到Vue的实例上，所以可以直接使用this调用
+          // arg0: 请求资源路径
+          // arg1: 操作属性
+          this.$http.get("package.json",{
+            // 请求参数
+            params:{
+              name:"Carl"
+            },
+            //header 参数
+            headers:{
+              toke:"token-value"
+            }
+            //then调用完成后的回调
+            // arg0:invoke success
+            // arg1:invoke fail
+          }).then(res=>{
+            console.log("invoke get after");
+            //获取响应结果存放在res.data和res.body中， 两个值是一样的。
+            // this.msg = res.data;
+            this.msg = "invoke success";
+          }, error=>{
+            // invoke fail
+            this.msg = error.data;
+
+          });
+        },
+        post(){
+          this.$http.post("package.json",{user_id:123},{headers:{token:"access token"}}).then(res=>{
+            this.msg = res.data;
+
+          }, error=>{
+            this.msg = error.data;
+
+          })
+
+        },
+        jsonp(){
+
+        },
+        http(){
+          this.$http({
+            url:"package.json",
+            method:"POST",
+            params:{
+              name:"carl",
+              age:"23"
+            },
+            headers:{
+              token:"token header",
+              cook:"cookie-val"
+            },
+            timeout:5000,
+            before:function () {
+              console.log("invoke before");
+
+            }
+          }).then(res=>{
+            this.msg = res.data;
+          }, error=>{
+            console.log(error);
+          });
+        }
+      }
     });
   </script>
 </body>
